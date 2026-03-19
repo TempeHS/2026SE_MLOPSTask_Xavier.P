@@ -1,0 +1,52 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-4">
+  <div class="row">
+    <h1 class="display-4">Spotify Release Year Predictor</h1>
+    <p class="lead">Enter track audio features to predict the release year.</p>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-6">
+      <form id="predict-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        {% for feature in features %}
+        <div class="mb-3">
+          <label for="{{ feature }}" class="form-label"
+            >{{ feature.replace('_', ' ').title() }}</label
+          >
+          <input
+            type="number"
+            step="any"
+            id="{{ feature }}"
+            name="{{ feature }}"
+            class="form-control"
+            placeholder="0.0"
+            max="1"
+            min="0"
+            required
+          />
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-success w-100">
+          Predict Release Year
+        </button>
+      </form>
+    </div>
+
+    <div class="col-md-6">
+      <div id="results" class="hidden">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Predicted Release Year</h4>
+            <p
+              id="prediction-value"
+              class="display-3 text-center text-success fw-bold"
+            ></p>
+          </div>
+        </div>
+      </div>
+      <div id="error-box" class="alert alert-danger hidden"></div>
+    </div>
+  </div>
+</div>
+<script src="{{ url_for('static', filename='js/predict.js') }}"></script>
+{% endblock %}

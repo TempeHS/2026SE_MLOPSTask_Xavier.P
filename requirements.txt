@@ -8,3 +8,5 @@ torchvision
 tqdm
 scikit-learn
 tensorflow
+Flask
+flask_wtf
